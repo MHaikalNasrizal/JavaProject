@@ -1,6 +1,5 @@
 # JavaProject
 
-Question 
 Write a java program using OOP concepts (including data members with their suitable 
 modifier, constructer, and setter and getter methods) to create a new user bank account, print 
 a user account info (of the same bank: ABC BANK) including bank name, full name, account 
@@ -20,6 +19,7 @@ may use array of objects), the user needs to choose the account type and give hi
 name, then the program randomly assigns an account number that is supposed to be four 
 digits between (1001-9999), assume the program will not randomly generate same account 
 number. 
+
 After the account is created, the program will display the created account info including user 
 name, account number, and account type, the program then will display the user's main menu 
 again. If the user opts to make a transaction, another menu will be displayed to the user to 
