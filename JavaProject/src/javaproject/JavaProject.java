@@ -16,28 +16,35 @@ public class JavaProject {
         Random random = new Random();
         do{
             System.out.println("=== ABC BANK MAIN MENU ===");
-            System.out.print("\nSelect : \n 1. Create Account\n 2. Transaction \n Choose (1,2 or 0 to exit the program): ");
+            System.out.print("\nSelect : \n 1. Create Account\n 2. Transaction \n Choose (0 to exit the program): ");
             choice = scanner.nextInt();
                 
                 if (choice == 1){
                     System.out.println("=[Create Account]=");
-                    System.out.println("\nSelect: \n 1. Saving Account \n 2. Cureent Account");
+                    System.out.print("\nSelect: \n 1. Saving Account \n 2. Current Account\n Choose (0 to exit the program):");
                     choice = scanner.nextInt();
+                    scanner.nextLine();
                     if (choice == 1){
-                        System.out.print("\nEnter your Full name : ");
-                        Fullname = scanner.next();
+                        System.out.println("Enter your Full name : ");
+                        Fullname = scanner.nextLine();
+                        
                         accNum = random.nextInt(9999 - 1001 + 1) + 1001;
                         account[i] = new SavingAccount(Fullname,"Saving Account",accNum);
                         System.out.println(account[i]);
                         i++;
                     } else if (choice == 2){
-                        System.out.print("\nEnter your Full name : ");
-                        Fullname = scanner.next();
+                        System.out.println("Enter your Full name : ");
+                        Fullname = scanner.nextLine();
+                        
                         accNum = random.nextInt(9999 - 1001 + 1) + 1001;
                         account[i] = new CurrentAccount(Fullname,"Current Account",accNum);
                         System.out.println(account[i]);
                         i++;
                     }
+                } else if (choice ==2 ){
+                    System.out.println("=[Transaction]=");
+                    System.out.print("\nSelect: \n 1. Display \n 2. Deposit \n 3. Withdraw \n 4. Transfer\n Choose (0 to exit the program):");
+                    choice = scanner.nextInt();
                 }
             
         
