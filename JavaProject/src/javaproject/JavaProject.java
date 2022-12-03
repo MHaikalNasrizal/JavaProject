@@ -1,22 +1,57 @@
-
 package javaproject;
 
 import java.util.Scanner;
 import java.util.Random;
+
 public class JavaProject {
 
-    
     public static void main(String[] args) {
-        
+        String Fullname, type;
+        double interest, balance;
+        int accNum;
+        int choice = 1;
+        int i =0;
+        BankAccount[] account = new BankAccount[50];
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        do{
+            System.out.println("=== ABC BANK MAIN MENU ===");
+            System.out.print("\nSelect : \n 1. Create Account\n 2. Transaction \n Choose (1,2 or 0 to exit the program): ");
+            choice = scanner.nextInt();
                 
+                if (choice == 1){
+                    System.out.println("=[Create Account]=");
+                    System.out.println("\nSelect: \n 1. Saving Account \n 2. Cureent Account");
+                    choice = scanner.nextInt();
+                    if (choice == 1){
+                        System.out.print("\nEnter your Full name : ");
+                        Fullname = scanner.next();
+                        accNum = random.nextInt(9999 - 1001 + 1) + 1001;
+                        account[i] = new SavingAccount(Fullname,"Saving Account",accNum);
+                        System.out.println(account[i]);
+                        i++;
+                    } else if (choice == 2){
+                        System.out.print("\nEnter your Full name : ");
+                        Fullname = scanner.next();
+                        accNum = random.nextInt(9999 - 1001 + 1) + 1001;
+                        account[i] = new CurrentAccount(Fullname,"Current Account",accNum);
+                        System.out.println(account[i]);
+                        i++;
+                    }
+                }
+            
+        
+        }while (choice != 0);
+
     }
-    
+
 }
 
-class BankAccount{
+class BankAccount {
+
     protected final String bankname = "ABC BANK";
     protected String Fullname, type;
-    protected double interest,balance;
+    protected double interest, balance;
     protected int accNum;
 
     public BankAccount() {
@@ -25,7 +60,7 @@ class BankAccount{
         balance = 0.0;
         interest = 0.0;
         accNum = 0;
-        
+
     }
 
     public BankAccount(String Fullname, String type, int accNum) {
@@ -35,7 +70,6 @@ class BankAccount{
         interest = 0.0;
         this.accNum = accNum;
     }
-    
 
     public String getFullname() {
         return Fullname;
@@ -77,15 +111,13 @@ class BankAccount{
         this.accNum = accNum;
     }
 
-    
     public String toString() {
         return "BankAccount{" + "bankname=" + bankname + ", Fullname=" + Fullname + ", type=" + type + ", interest=" + interest + ", balance=" + balance + ", accNum=" + accNum + '}';
     }
-    
-    
+
 }
 
-class SavingAccount extends BankAccount{
+class SavingAccount extends BankAccount {
 
     public SavingAccount() {
     }
@@ -96,22 +128,17 @@ class SavingAccount extends BankAccount{
         interest = 0.05;
     }
 
-    
-
 }
 
-class CurrrentAccount extends BankAccount{
+class CurrentAccount extends BankAccount {
 
-    public CurrrentAccount() {
+    public CurrentAccount() {
     }
 
-    public CurrrentAccount(String Fullname, String type, int accNum) {
+    public CurrentAccount(String Fullname, String type, int accNum) {
         super(Fullname, type, accNum);
         balance = 200;
         interest = 0.01;
     }
-
-    
-    
 
 }
