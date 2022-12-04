@@ -1,11 +1,13 @@
 package javaproject;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Random;
 
 public class JavaProject {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
+        
         String Fullname;
         double balance;
         int accNum;
@@ -17,10 +19,16 @@ public class JavaProject {
         Random random = new Random();
         do {
 
-            System.out.println("=== ABC BANK MAIN MENU ===");
+            System.out.println("\n=== ABC BANK MAIN MENU ===");
             System.out.print("\nSelect : \n 1. Create Account\n 2. Transaction \n Choose (0 to exit the program): ");
+            try{
             choice = scanner.nextInt();
-
+            }catch(InputMismatchException e){
+                
+                System.out.println("the input is not a number");
+                scanner.next();
+                break;
+            }
             if (choice == 1) {
                 System.out.println("\n=[Create Account]=");
                 System.out.print("\nSelect: \n 1. Saving Account \n 2. Current Account\n Choose (0 to exit the program):");
@@ -54,66 +62,104 @@ public class JavaProject {
                 choice = scanner.nextInt();
                 switch (choice) {
                     case 1:
+                        try{
                         System.out.print("To Display account Detail Please Enter Account Number : ");
                         accNum = scanner.nextInt();
-                        try{
+                        
                         for (i = 0; i < account.length; i++) {
                             if (account[i].getAccNum() == accNum) {
                                 System.out.println(account[i]);
+                                break;
                             }
 
                         }
                         }catch(NullPointerException e){
                             System.out.println("Invalid Account Number");
+                        }catch(InputMismatchException e){
+                            
+                            System.out.println("the input is not a number");
+                            scanner.next();
+                            
                         }
                         break;
 
                     case 2:
                         System.out.print("[Deposit]Please Enter Account Number : ");
+                        try{
                         accNum = scanner.nextInt();
+                        
                         for (i = 0; i < account.length; i++) {
-                            try{
+                            
                             if (accNum == account[i].accNum) {
                                 System.out.println("Current Balance : RM " + account[i].getBalance());
                                 System.out.print("Deposit : RM ");
                                 balance = scanner.nextDouble();
+                                if (balance <= 0){
+                                    throw new ArithmeticException();
+                                }
                                 balance = balance + account[i].getBalance();
                                 account[i].setBalance(balance);
-                                System.out.println("New Balance : RM " + account[i].getBalance());
+                                System.out.println("[Sucessful]New Balance : RM " + account[i].getBalance());
                                 break;
 
                             }
-                            }catch(NullPointerException e){
-                                System.out.println("Invalid Account Number ");
-                            }
-
+                            
+                            
+                        }
+                        }catch(NullPointerException e){
+                            System.out.println("Deposit Unsuccessful : Account does not exist");
+                        }catch(InputMismatchException e){
+                            
+                            System.out.println("Deposit Unsuccessful : the input is not a number");
+                            scanner.next();
+                        }catch(ArithmeticException e){
+                            System.out.println("Deposit Unsuccessful : Given amount is less than or equals to zero");
+                            
                         }
                         break;
                     case 3:
-                        System.out.print("[Transfer]Please Enter Account Number : ");
-                        accNum = scanner.nextInt();
+                        System.out.print("[Withdraw]Please Enter Account Number : ");
                         try{
+                        accNum = scanner.nextInt();
+                        
                         for (i = 0; i < account.length; i++) {
                             if (accNum == account[i].accNum) {
                                 System.out.println("Current Balance : RM " + account[i].getBalance());
                                 System.out.print("Withdraw : RM ");
                                 balance = scanner.nextDouble();
+                                if(balance > account[i].getBalance()){
+                                    throw new Exception();
+                                }
+                                if (balance <= 0){
+                                    throw new ArithmeticException();
+                                }
                                 balance = account[i].getBalance() - balance;
                                 account[i].setBalance(balance);
-                                System.out.println("New Balance : RM" + account[i].getBalance());
+                                System.out.println("[Sucessful]New Balance : RM" + account[i].getBalance());
                                 break;
 
                             }
 
                         }
                         }catch(NullPointerException e){
-                            System.out.println("Invalid Account Number");
+                            System.out.println("Withdraw Unsuccessful : Account does not exist");
+                        }catch(InputMismatchException e){
+                            
+                            System.out.println("Withdraw Unsuccessful : the input is not a number");
+                            scanner.next();
+                        }catch(ArithmeticException e){
+                            System.out.println("Withdraw Unsuccessful : Given amount is less than or equals to zero");
+                            
+                        }catch(Exception e){
+                            System.out.println("Transfer Unsuccessful : the withdrawn balance is " +
+                            "greater than the current balance");
                         }
                         break;
                     case 4:
                         System.out.print("[Transfer]Please Enter Account Number : ");
-                        accNum = scanner.nextInt();
                         try{
+                        accNum = scanner.nextInt();
+                        
                         for (i = 0; i < account.length; i++) {
                             if (accNum == account[i].accNum) {
                                 System.out.println("Current Balance : RM " + account[i].getBalance());
@@ -121,15 +167,27 @@ public class JavaProject {
                                 balance = scanner.nextDouble();
                                 double send = balance;
                                 String sender = account[i].getFullname();
-                                balance = account[i].getBalance() - balance;
-                                account[i].setBalance(balance);
+                                if(balance > account[i].getBalance()){
+                                    throw new Exception();
+                                }
+                                if (balance <= 0){
+                                    throw new ArithmeticException();
+                                }
+                                int temp = i;
+                                double temp2 = balance;
                                 System.out.print("[Transfer]Please Enter receiver Account Number : ");
                                 accNum = scanner.nextInt();
+                                
                                 for (i = 0; i < account.length; i++) {
                                     if (accNum == account[i].accNum) {
+                                        //add to the other account
                                         balance = account[i].getBalance() + send;
                                         account[i].setBalance(balance);
-                                        System.out.println("===Receipt===");
+                                        //1st account deduct
+                                        temp2 = account[temp].getBalance() - temp2;
+                                        account[temp].setBalance(temp2);
+                                        //Print
+                                        System.out.println("[Sucessful] ===Receipt===");
                                         System.out.println("Sender name = " + sender);
                                         System.out.println("Total Receive = " + send);
                                         System.out.println("Account Number = " + account[i].getAccNum());
@@ -140,7 +198,18 @@ public class JavaProject {
                          
                         }
                         }catch(NullPointerException e){
-                            System.out.println("Invalid Account Number");
+                            System.out.println("Transfer Unsuccessful : Account does not exist");
+                            break;
+                        }catch(InputMismatchException e){
+                            
+                            System.out.println("Transfer Unsuccessful : the input is not a number");
+                            scanner.next();
+                        }catch(ArithmeticException e){
+                            System.out.println("Transfer Unsuccessful : Given amount is less than or equals to zero");
+                            
+                        }catch(Exception e){
+                            System.out.println("Transfer Unsuccessful : the withdrawn balance is " +
+                            "greater than the current balance");
                         }
                         break;
                     default:
@@ -151,6 +220,7 @@ public class JavaProject {
         } while (choice != 0);
 
     }
+  
 
 }
 
