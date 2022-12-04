@@ -19,7 +19,7 @@ public class JavaProject {
         Random random = new Random();
         do {
 
-            System.out.println("=== ABC BANK MAIN MENU ===");
+            System.out.println("\n=== ABC BANK MAIN MENU ===");
             System.out.print("\nSelect : \n 1. Create Account\n 2. Transaction \n Choose (0 to exit the program): ");
             try{
             choice = scanner.nextInt();
@@ -157,8 +157,9 @@ public class JavaProject {
                         break;
                     case 4:
                         System.out.print("[Transfer]Please Enter Account Number : ");
-                        accNum = scanner.nextInt();
                         try{
+                        accNum = scanner.nextInt();
+                        
                         for (i = 0; i < account.length; i++) {
                             if (accNum == account[i].accNum) {
                                 System.out.println("Current Balance : RM " + account[i].getBalance());
