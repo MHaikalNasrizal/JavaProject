@@ -1,11 +1,13 @@
 package javaproject;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Random;
 
 public class JavaProject {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
+        
         String Fullname;
         double balance;
         int accNum;
@@ -19,8 +21,14 @@ public class JavaProject {
 
             System.out.println("=== ABC BANK MAIN MENU ===");
             System.out.print("\nSelect : \n 1. Create Account\n 2. Transaction \n Choose (0 to exit the program): ");
+            try{
             choice = scanner.nextInt();
-
+            }catch(InputMismatchException e){
+                
+                System.out.println("the input is not a number");
+                scanner.next();
+                break;
+            }
             if (choice == 1) {
                 System.out.println("\n=[Create Account]=");
                 System.out.print("\nSelect: \n 1. Saving Account \n 2. Current Account\n Choose (0 to exit the program):");
@@ -54,17 +62,24 @@ public class JavaProject {
                 choice = scanner.nextInt();
                 switch (choice) {
                     case 1:
+                        try{
                         System.out.print("To Display account Detail Please Enter Account Number : ");
                         accNum = scanner.nextInt();
-                        try{
+                        
                         for (i = 0; i < account.length; i++) {
                             if (account[i].getAccNum() == accNum) {
                                 System.out.println(account[i]);
+                                break;
                             }
 
                         }
                         }catch(NullPointerException e){
                             System.out.println("Invalid Account Number");
+                        }catch(InputMismatchException e){
+                            
+                            System.out.println("the input is not a number");
+                            scanner.next();
+                            
                         }
                         break;
 
@@ -85,12 +100,17 @@ public class JavaProject {
                             }
                             }catch(NullPointerException e){
                                 System.out.println("Invalid Account Number ");
-                            }
+                            }catch(InputMismatchException e){
+                            
+                            System.out.println("the input is not a number");
+                            break;
+                            
+                        }
 
                         }
                         break;
                     case 3:
-                        System.out.print("[Transfer]Please Enter Account Number : ");
+                        System.out.print("[Withdraw]Please Enter Account Number : ");
                         accNum = scanner.nextInt();
                         try{
                         for (i = 0; i < account.length; i++) {
@@ -108,6 +128,10 @@ public class JavaProject {
                         }
                         }catch(NullPointerException e){
                             System.out.println("Invalid Account Number");
+                        }catch(InputMismatchException e){
+                            
+                            System.out.println("the input is not a number");
+                            scanner.next();
                         }
                         break;
                     case 4:
@@ -141,6 +165,10 @@ public class JavaProject {
                         }
                         }catch(NullPointerException e){
                             System.out.println("Invalid Account Number");
+                        }catch(InputMismatchException e){
+                            
+                            System.out.println("the input is not a number");
+                            scanner.next();
                         }
                         break;
                     default:
@@ -151,6 +179,7 @@ public class JavaProject {
         } while (choice != 0);
 
     }
+  
 
 }
 
