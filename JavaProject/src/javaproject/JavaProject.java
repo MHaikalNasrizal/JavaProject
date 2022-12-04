@@ -173,14 +173,20 @@ public class JavaProject {
                                 if (balance <= 0){
                                     throw new ArithmeticException();
                                 }
-                                balance = account[i].getBalance() - balance;
-                                account[i].setBalance(balance);
+                                int temp = i;
+                                double temp2 = balance;
                                 System.out.print("[Transfer]Please Enter receiver Account Number : ");
                                 accNum = scanner.nextInt();
+                                
                                 for (i = 0; i < account.length; i++) {
                                     if (accNum == account[i].accNum) {
+                                        //add to the other account
                                         balance = account[i].getBalance() + send;
                                         account[i].setBalance(balance);
+                                        //1st account deduct
+                                        temp2 = account[temp].getBalance() - temp2;
+                                        account[temp].setBalance(temp2);
+                                        //Print
                                         System.out.println("[Sucessful] ===Receipt===");
                                         System.out.println("Sender name = " + sender);
                                         System.out.println("Total Receive = " + send);
@@ -193,6 +199,7 @@ public class JavaProject {
                         }
                         }catch(NullPointerException e){
                             System.out.println("Transfer Unsuccessful : Account does not exist");
+                            break;
                         }catch(InputMismatchException e){
                             
                             System.out.println("Transfer Unsuccessful : the input is not a number");
